@@ -1,0 +1,44 @@
+@import '../../../colors.scss';
+
+.input_container{
+    
+    width:92%;
+    margin-bottom: 20px;
+    .label{
+        display: block;
+        font-size: 15px;
+        letter-spacing: 0.08rem;
+        font-weight: bold;
+        // font-family: $abel_font;
+    }
+    .input_area{
+        display: block;
+        width: 100%;
+        height: 23px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+        &:focus{
+            outline: none;
+        }
+    }
+    .text_area{
+        display: block;
+        width: 100%;
+        height:60px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+        &:focus{
+            outline: none;
+        }
+    }
+  
+    .red_border{
+        border:1px solid red;
+    }
+    .error{
+        display: block;
+        font-size: 15px;
+        color: $fav_red;
+        font-family: $abel_font;
+        letter-spacing:0.05rem;
+        font-weight: bold;
+    }
+}

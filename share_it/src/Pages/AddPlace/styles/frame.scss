@@ -1,0 +1,64 @@
+@import '../../../colors.scss';
+.form_container{
+    width:90%;
+    margin:0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form{
+        width:50%;
+        height:400px;
+        background: $vlite_white;
+        margin:10px 0;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+        .submit{
+            width: 100px;
+            height: 50px;
+            background: $fav_red;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            border-radius:12px;
+            letter-spacing:0.1rem;
+            text-decoration: underline;
+            animation:appearing 1.5s;
+            transition: $transition;
+            @media screen and (max-width:650px){
+                 width:80px;
+                 height: 40px;
+            }
+            cursor: pointer;
+            .h3{
+                opacity: 1;
+                
+            }
+            @keyframes appearing {
+                0%{
+                    opacity:0;
+                }
+                100%{
+                    opacity: 0.7;
+                }
+            }
+        }
+        @media screen and (min-width:1000px) and (max-width:1350px){
+            width:60%;
+        }
+        @media screen and (min-width:750px) and (max-width:999px){
+            width:75%;
+        }
+        @media screen and (min-width:400px) and (max-width:749px){
+            width:80%;
+        }
+        @media screen and (max-width:399px){
+            width:81%;
+        }
+        
+    }
+}

@@ -1,0 +1,62 @@
+@import '../../../colors.scss';
+
+
+
+.card{
+    height: 90%;
+    margin:10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    text-decoration: none;
+    h5{
+        font-family: $abel_font;
+        color: $primary_white;
+        margin:10px 30px;
+        font-size: 17px;
+        letter-spacing: 0.15rem;
+    }
+    @media screen and (min-width:1250px){
+        &:hover{
+            background: $yellow_text;
+            text-decoration: underline;
+            h5{
+                color: $primary_black;
+            }
+        }
+    }
+    @media screen and (min-width:701px) and (max-width:900px){
+        margin:2px 2px;
+        
+        h5{
+            margin:5px 16px;
+            font-size: 14px;
+            letter-spacing: 0.08rem;
+        }
+        
+    }
+    @media screen and (min-width:901px) and (max-width:1200px){
+        margin:6px 6px;
+        
+        h5{
+            margin:7px 22px;
+            font-size: 18px;
+            letter-spacing: 0.08rem;
+        }
+       
+    }
+   
+}
+.active-card{
+    background: $yellow_text;
+    text-decoration: underline;
+    @media screen and (max-width:699px){
+        height:30%; 
+    }
+    h5{
+        color: $primary_black;
+    }
+}

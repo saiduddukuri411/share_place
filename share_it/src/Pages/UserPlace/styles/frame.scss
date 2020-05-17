@@ -1,0 +1,50 @@
+@import "../../../colors.scss";
+
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: $transition;
+  h3 {
+    font-family: $abel_font;
+    letter-spacing: 0.3rem;
+    margin: 10px 0;
+    font-size: 20px;
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+.frame {
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .frame-container {
+    width: 88%;
+    // border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    
+    @media screen and (min-width:800px) and (max-width:1100px){
+        grid-template-columns: repeat(2,1fr);
+    }
+    @media screen and (min-width:500px) and (max-width:799px){
+        grid-template-columns: repeat(2,1fr);
+    }
+    @media screen and (max-width:499px){
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+  }
+}

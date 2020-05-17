@@ -1,0 +1,39 @@
+@import '../../../colors.scss';
+.slide-in-left{
+    &-enter{
+        transform: translateX(100%);
+    }
+    &-enter-active{
+        transform: translateX(0%);
+        opacity:1;
+        transition: all 300ms;
+    }
+    &-exit{
+        transform: translateX(0%);
+        opacity:1;
+        transition: all 300ms;
+    }
+}
+
+.side-drawer{
+    position: fixed;
+    width:65%;
+    height:100%;
+    top:0;
+    right:0;
+    background: $primary_black;
+    z-index: 200;
+    .card-container{
+        width:90%;
+        height:50vh;
+        margin:30px 10px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        animation: none !important;
+        transition: none !important;
+        
+    }
+}
