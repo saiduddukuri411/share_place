@@ -49,59 +49,61 @@
             // border: 1px solid red;
             .form_submit{
                 width:80px;
-                height:40px;
+                height:38px;
                 background: $fav_red;
-                border-radius: 16px;
-                opacity: 0.7;
+                border-radius: 8px;
+                opacity: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                margin-left: 15px;
                 animation: button_appear 1s;
 
                 h3{
                     font-size: 16px;
-                    letter-spacing: 0.06rem;
+                    letter-spacing: 0.13rem;
                     opacity: 1;
                     font-weight: bold;
-                    text-decoration: underline;
+                    color: $vlite_white;
+                    font-family: $abel_font;
                 }
                 @keyframes button_appear {
                     0%{
                         opacity: 0;
                     }
                     100%{
-                        opacity: 0.7;
+                        opacity: 0.1;
                     }
                     
                 }
             }
             .back_button{
-                width:80px;
-                height:40px;
-                background: $fav_red;
+                width:90px;
+                height:38px;
+                background: $primary_black;
                 font-weight: bold;
-                border-radius: 16px;
-                opacity: 0.7;
+                border-radius: 8px;
+                opacity: 0.9;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                text-decoration: underline;
                 cursor: pointer;
                 animation: button_appear 1s;
-                margin-left: 15px;
-                color: black;
+                
+                color: $vlite_white;
                 h3{
                     font-size: 16px;
-                    letter-spacing: 0.05rem;
-                    opacity: 1;
+                    font-family: $abel_font;
+                    letter-spacing: 0.13rem;
+                    opacity: 0.9;
                 }
                 @keyframes button_appear {
                     0%{
                         opacity: 0;
                     }
                     100%{
-                        opacity: 0.7;
+                        opacity: 1;
                     }
                     
                 }

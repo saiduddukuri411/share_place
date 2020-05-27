@@ -2,14 +2,23 @@ import React from "react";
 import "./styles/frame.scss";
 import { IoMdShareAlt } from "react-icons/io";
 import Links from "./components/link";
-import { links } from "./components/data";
+import { login_links,logout_links } from "./components/data";
 import { Link} from "react-router-dom";
 import {AiOutlineMenuFold} from 'react-icons/ai';
 import {BdFilter} from '../../Usercontext';
 
 const Frame = () => {
-  const {setbd,setsd}=React.useContext(BdFilter);
-  console.log('header.js')
+  const {setbd,setsd,li}=React.useContext(BdFilter);
+  let list;
+  if(li){
+    list =login_links.map((link, index) => (
+     <Links key={index} text={link.name} link={link.link}/>
+    ))
+  }else{
+    list =logout_links.map((link, index) => (
+      <Links key={index} text={link.name} link={link.link}/>
+     )) 
+  }
   return (
     <header className="header">
       <div className="content_holder">
@@ -22,9 +31,7 @@ const Frame = () => {
           </h1>
         </Link>
         <div className="right-div">
-          {links.map((link, index) => (
-            <Links key={index} text={link.name} link={link.link}/>
-          ))}
+          {list}
         </div>
         <div className="handburger">
             <h1 onClick={(bd)=>{

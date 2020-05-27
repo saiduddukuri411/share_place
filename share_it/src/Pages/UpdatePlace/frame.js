@@ -78,14 +78,7 @@ const Frame = (props) => {
           ]}
         />
         <div className="button_cover">
-          <div
-            className={
-              check_validity() ? "form_submit" : "form_submit display_none"
-            }
-          >
-            <h3>UPDATE</h3>
-          </div>
-          <Link
+        <Link
             to={`/${exact_list.owner}/places`}
             style={{ textDecoration: "none" }}
           >
@@ -93,6 +86,14 @@ const Frame = (props) => {
               <h3>BACK</h3>
             </div>
           </Link>
+          <div
+            className={
+              check_validity() ? "form_submit" : "form_submit display_none"
+            }
+          >
+            <h3>UPDATE</h3>
+          </div>
+          
         </div>
       </form>
     </div>

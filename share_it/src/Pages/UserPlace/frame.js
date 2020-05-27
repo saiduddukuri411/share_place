@@ -11,7 +11,7 @@ import Model from "../Backdop/model";
 
 const Userplace = (props) => {
   const id = props.match.params.userId;
-  const { bd } = React.useContext(BdFilter);
+  const { bd,li } = React.useContext(BdFilter);
   const { md } = React.useContext(MdFilter);
   const data = Places.filter((place) => place.owner === id);
   console.log(bd, md);
@@ -21,7 +21,7 @@ const Userplace = (props) => {
         <div className="not-found">
           <Notfound text="PLACES NOT FOUND" />
           <Link to="/places/new" style={{ textDecoration: "none" }}>
-            <h3>+ADD ONE</h3>
+            {li?<h3>+ADD ONE</h3>:null}
           </Link>
         </div>
         {bd ? <Backdrop /> : null};

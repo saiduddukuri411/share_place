@@ -1,0 +1,66 @@
+@import "../../../colors.scss";
+.whole_width {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: $transition;
+
+  .user_box {
+    width: 250px;
+    height: 40px;
+    border-bottom: 1.5px solid $vlite_white;
+    display: flex;
+    align-items: center;
+    .user_icon {
+      margin-left: 10px;
+      font-size: 22px;
+    }
+    .eye{
+      margin-left: 2px;
+      font-size: 25px;
+    }
+    .username_container {
+      height: 28px;
+      width: 186px;
+      margin-left: 2px;
+      .input {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        font-family: $abel_font;
+        letter-spacing: 0.07rem;
+        border: none;
+        font-size: 18px;
+        color: $vlite_white;
+        &:focus {
+          outline: none;
+          background: transparent;
+        }
+      }
+    }
+    &:hover {
+      border-bottom: 1.5px solid $form_green;
+      .user_icon {
+        color: $form_green;
+      }
+    }
+  }
+}
+.error_container {
+  width: 100%;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .error {
+    width: 220px;
+    letter-spacing: 0.11rem;
+    font-family: $abel_font;
+    font-size: 22px;
+    h5 {
+      color: $yellow_text;
+    }
+  }
+}

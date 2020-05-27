@@ -7,7 +7,7 @@ import "./styles/model.scss";
 export const Model = ({ center, zoom }) => {
   //const google_map=new window.google.maps.Map();
   const { setbd } = React.useContext(BdFilter);
-  const { setmd, md, ti, mp, details } = React.useContext(MdFilter);
+  const { setmd, md, ti, mp, details, de } = React.useContext(MdFilter);
 
   console.log(details, details.lat, details.lng);
   const map_ref = useRef();
@@ -16,7 +16,7 @@ export const Model = ({ center, zoom }) => {
     setbd((prev) => false);
     setmd((prev) => false);
   };
-  
+
   React.useEffect(() => {
     if (mp) {
       const google_map = new window.google.maps.Map(map_ref.current, {
@@ -39,6 +39,24 @@ export const Model = ({ center, zoom }) => {
         <div class="map_container">
           {mp ? (
             <div ref={map_ref} className="map_content"></div>
+          ) : de ? (
+            <div className="delete_container">
+              <h1>ARE YOU SURE?</h1>
+              <div className="delete_content">
+                <h2>
+                  Do you want to proceed and delete this place? Please note that
+                  it can't be undone thereafter.
+                </h2>
+              </div>
+              <div className="buttons_handler">
+                <div className="cancel_btn" onClick={trigger}>
+                  <h2>CANCEL</h2>
+                </div>
+                <div className="delete_btn">
+                  <h2>DELETE</h2>
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="about_content">
               <h1>ABOUT!</h1>
@@ -48,11 +66,13 @@ export const Model = ({ center, zoom }) => {
             </div>
           )}
         </div>
-        <div class="cls_btn_holder">
-          <div class="btn">
-            <h2 onClick={trigger}>CLOSE</h2>
+        {de ? null : (
+          <div class="cls_btn_holder">
+            <div class="btn" onClick={trigger}>
+              <h2>CLOSE</h2>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
