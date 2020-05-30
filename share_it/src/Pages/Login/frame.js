@@ -9,15 +9,23 @@ import { useForm } from "./components/useForm";
 import Sidedrawer from "../Backdop/Sidedrawer";
 import Backdrop from "../Backdop/backdrop";
 import { BdFilter } from "../../Usercontext";
-import Loader from '../Loading/frame';
+import Loader from "../Loading/frame";
+import Errmodel from "../Err_model/frame";
 
 export const Frame = () => {
   const [values, validation, handler] = useForm({
     initialState: { email: "", password: "", user: "" },
     validations: { email: false, password: false, user: false },
   });
-  const [isLoading,setIsloading]=React.useState(false);
-  const [isError,setIsError]=React.useState(null);
+  const [isLoading, setIsloading] = React.useState(false);
+  const [isError, setIsError] = React.useState(null);
+  const [succSignup,setSignup]=React.useState(false);
+  const errHandler = () => {
+    setIsError((prev) => null);
+  };
+  const signupHandler=()=>{
+    setSignup((prev)=>false)
+  }
   const { bd } = React.useContext(BdFilter);
   const [singup, setsignup] = React.useState(false);
   const login = () => {
@@ -71,9 +79,14 @@ export const Frame = () => {
           values={values}
           sl={setIsloading}
           se={setIsError}
+          ss={setSignup}
         />
         <div className="extra_holder">
-          <div className={singup?"extra_features justify_center":"extra_features"}>
+          <div
+            className={
+              singup ? "extra_features justify_center" : "extra_features"
+            }
+          >
             <h2
               className="childs text_dec"
               onClick={() => {
@@ -90,8 +103,14 @@ export const Frame = () => {
           </div>
         </div>
       </section>
-      {bd ? <Backdrop /> : null};
-      {isLoading?<Loader />:null}
+      {bd ? <Backdrop /> : null};{isLoading ? <Loader /> : null}
+      {isError ? (
+        <Errmodel err={isError} title="An Error Occured!" fun={errHandler} btn="okay" />
+      ) : null}
+      {succSignup?
+      <Errmodel err="user successfully regestered , kindly go back and login." title="Successfully Registered" fun="" btn="Home" />:
+      null
+      }
       <Sidedrawer />
     </>
   );
