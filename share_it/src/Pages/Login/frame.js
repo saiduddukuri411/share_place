@@ -9,12 +9,15 @@ import { useForm } from "./components/useForm";
 import Sidedrawer from "../Backdop/Sidedrawer";
 import Backdrop from "../Backdop/backdrop";
 import { BdFilter } from "../../Usercontext";
+import Loader from '../Loading/frame';
 
 export const Frame = () => {
   const [values, validation, handler] = useForm({
     initialState: { email: "", password: "", user: "" },
     validations: { email: false, password: false, user: false },
   });
+  const [isLoading,setIsloading]=React.useState(false);
+  const [isError,setIsError]=React.useState(null);
   const { bd } = React.useContext(BdFilter);
   const [singup, setsignup] = React.useState(false);
   const login = () => {
@@ -65,6 +68,9 @@ export const Frame = () => {
           btn_text={singup ? "SignUp" : "Login"}
           isValid={singup ? signup_fun : login}
           signup={singup}
+          values={values}
+          sl={setIsloading}
+          se={setIsError}
         />
         <div className="extra_holder">
           <div className={singup?"extra_features justify_center":"extra_features"}>
@@ -85,6 +91,7 @@ export const Frame = () => {
         </div>
       </section>
       {bd ? <Backdrop /> : null};
+      {isLoading?<Loader />:null}
       <Sidedrawer />
     </>
   );

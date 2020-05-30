@@ -14,7 +14,7 @@ const Frame = () => {
     if(users.length===0){
        return (
         <>
-       <section className="not-found"><Notfound text="No User Registered"/></section>
+       <section className="not-found"><Notfound text="No Users Registered"/></section>
        {bd?<Backdrop />:null};
        <Sidedrawer />
        </>
