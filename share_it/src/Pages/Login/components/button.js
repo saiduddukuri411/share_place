@@ -7,9 +7,10 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss }) => {
   const { setli } = React.useContext(BdFilter);
   const history = useHistory();
   const LoginHandler = async (event) => {
+    sl((prev) => true);
     if (signup) {
       try {
-        sl((prev) => true);
+        
         se((prev) => null);
         ss(() => false);
           const response = await fetch("http://localhost:5000/api/users/signup", {
@@ -38,8 +39,32 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss }) => {
 
       return;
     } else {
-      setli((prev) => true);
-      history.push("/");
+      try{
+        const response= await fetch("http://localhost:5000/api/users/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              email: values.email,
+              password: values.password,
+            }),
+          });
+          const response_data = await response.json();
+          if (!response.ok){
+            throw new Error(response_data.message);
+         }
+        sl((prev) => false);
+        setli((prev) => true);
+        history.push("/");
+
+      }catch(err){
+        sl((prev) => false);
+        se(err.message || "something went wrong, try again");
+      }
+
+      
     }
   };
   return (

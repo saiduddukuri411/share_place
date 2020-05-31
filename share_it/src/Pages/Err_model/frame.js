@@ -3,6 +3,7 @@ import "./styles/frame.scss";
 import {Link} from 'react-router-dom';
 
 const Err_modal = ({ err, fun, title ,btn }) => {
+  console.log('sai',typeof(err),err.message)
   return (
     <>
       <section className="frame_container"></section>
