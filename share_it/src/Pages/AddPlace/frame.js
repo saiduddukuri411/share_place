@@ -4,6 +4,11 @@ import Sidedrawer from "../Backdop/Sidedrawer";
 import { BdFilter } from "../../Usercontext";
 import Input from "./components/input";
 import "./styles/frame.scss";
+import {useHttpHook} from '../Hooks/httpHook.js';
+import Errmodel from '../Err_model/frame';
+import Loader from '../Loading/frame';
+import {useHistory} from 'react-router-dom'
+
 
 const reducer=(state,action)=>{
   switch(action.type){
@@ -18,8 +23,14 @@ const reducer=(state,action)=>{
   }
 }
 const Frame = () => {
-  const { bd } = React.useContext(BdFilter);
-  
+  const { isLoading, error, senRequest, clearError } = useHttpHook();
+  const { bd,uid } = React.useContext(BdFilter);
+  const [inputs,setInputs]=React.useState({0:'',1:'',2:''})
+  const [success,setsuccess]=React.useState(false)
+  const GoHome=()=>{
+    const history=useHistory();
+    history.push('/');
+  }
   const [overallState,dispatcher]=React.useReducer(reducer,{
     title:false,
     desc:false,
@@ -38,6 +49,24 @@ const Frame = () => {
      let valid=overallState.title && overallState.desc && overallState.add;
      return valid
   }
+  const addHandler=async ()=>{
+    try{
+      const resp=await senRequest('http://localhost:5000/api/places/','POST',JSON.stringify({
+        title:inputs[0],
+        description:inputs[1],
+        address:inputs[2],
+        owner:uid
+ 
+     }),{'Content-Type':'application/json'})
+     setsuccess(true)
+     
+    //  redirect the user to different page
+    }catch(err){
+    }
+    
+    
+ }
+
   
   return (
     <>
@@ -52,6 +81,8 @@ const Frame = () => {
             validators={[{ type: "REQUIRE" }]}
             validation_error="Empty field"
             onInput={validate_function}
+            setter={setInputs}
+            inputs={inputs}
           />
           <Input
             label="Description"
@@ -65,6 +96,8 @@ const Frame = () => {
             ]}
             validation_error="Describe in 20 to 350 charecters"
             onInput={validate_function}
+            setter={setInputs}
+            inputs={inputs}
           />
           <Input
             label="Address"
@@ -75,9 +108,11 @@ const Frame = () => {
             validators={[{ type: "REQUIRE" }]}
             validation_error="Invalid address"
             onInput={validate_function}
+            setter={setInputs}
+            inputs={inputs}
           />
           {list_validator() ? (
-            <div className="submit">
+            <div className="submit" onClick={addHandler}>
               <h3>ADD</h3>
             </div>
           ) : null}
@@ -85,6 +120,9 @@ const Frame = () => {
       </div>
       {bd ? <Backdrop /> : null}
       <Sidedrawer />
+      {isLoading?<Loader />:null}
+      {error?<Errmodel err={error} title="An Error Occured!" fun={clearError} btn="okay"/>:null}
+      {success?<Errmodel err="Added your desired location successfull" title="Successfully Added" fun={GoHome} btn="Home"/>:null}
     </>
   );
 };

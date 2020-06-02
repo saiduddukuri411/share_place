@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "./styles/frame.scss";
 import Card from "./components/card";
 import Notfound from "../NotFound/notFound";
@@ -9,60 +9,41 @@ import Sidedrawer from "../Backdop/Sidedrawer";
 import { BdFilter } from "../../Usercontext";
 import Loader from "../Loading/frame";
 import Errmodel from "../Err_model/frame";
+import { useHttpHook } from "../Hooks/httpHook";
 
 const Frame = () => {
-  const [isloading, setIsloading] = React.useState(true);
-  const [iserror, setIserror] = React.useState(null);
-  const [loadedUsers, setLoadedusers] = React.useState([]);
-  const [Retry, setRetry] = React.useState(false);
-  const retry = () => {
-    setIsloading((prev) => true);
-    setIserror((prev) => null);
-  };
-  React.useEffect(() => {
-    const sendRequest = async () => {
-      setIsloading((prev) => true);
-      setIserror((prev) => null);
+  
+  const { isLoading, error, senRequest, clearError } = useHttpHook();
+
+  const [loadedUsers, setLoadedusers] = React.useState('Loading');
+ 
+  React.useEffect(()=>{
+    const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/users/");
-        const resData = await response.json();
-        if (!response.ok) {
-          throw new Error(resData.message);
+        const response = await senRequest("http://localhost:5000/api/users/");
+        if(response){
+          setLoadedusers((prev)=>response.users)
         }
-        setIsloading((prev) => false);
-        setLoadedusers((prev) => resData.users);
+        
       } catch (err) {
-        if(err.message){
-          if(err.message==='no user exist'){
-            setIsloading((prev) => false);
-            setIserror((prev)=>null)
-            return;
-          }
-        }
-        setIsloading((prev) => false);
-        setIserror((prev) => {
-           return err.message||'Something Went Wrong'
-        });
       }
-    };
-    sendRequest();
-  }, [Retry]);
-  const users = loadedUsers;
+    }
+    fetchUsers();
+  }, [senRequest]);
+  
   const { bd } = React.useContext(BdFilter);
 
-  if (isloading) {
+  if (isLoading) {
     return <Loader />;
   }
-  if (iserror) {
+  if (error!==null) {
     return (
-      <Errmodel
-        err={iserror}
-        title="An Error Occured!"
-        fun={retry}
-        btn="Retry"
-      />
-      
+      <Errmodel err={error} title="An Error Occured!" fun={clearError} btn="Reload" />
     );
+  }
+  const users = loadedUsers;
+  if(users==='Loading'){
+    return <Loader />;
   }
   if (users.length === 0) {
     return (

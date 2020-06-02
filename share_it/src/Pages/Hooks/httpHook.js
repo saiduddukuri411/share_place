@@ -3,15 +3,20 @@ import React from "react";
 export const useHttpHook = () => {
   const [isLoading, setLoading] = React.useState(false);
   const [error, seterror] = React.useState(null);
+  const activeHttpRequests=React.useRef([]);
+ 
 
-  const senRequest = async (url, method = "GET", body = null, headers = {}) => {
+  const senRequest = React.useCallback(async (url, method = "GET", body = null, headers = {}) => {
       setLoading((prev)=>true);
-      setLoading((prev)=>null)
+      seterror((prev)=>null)
+      const httpAbortCtrl= new AbortController();
+      activeHttpRequests.current.push(httpAbortCtrl);
     try {
       const response=await fetch(url, {
         method,
         body,
         headers,
+        signal:httpAbortCtrl.signal,
       });
     const responseData=await response.json();
     if(!response.ok){
@@ -24,7 +29,18 @@ export const useHttpHook = () => {
     setLoading((prev)=>false);
     seterror((prev=>err.message||'something went wrong'));
     }
-  };
+  },[]);
 
-  return {isLoading,error,senRequest};
+  const clearError=React.useCallback(()=>{
+    console.log('sai')
+    seterror((prev)=>null)
+  },[])
+  //  React.useEffect=(()=>{
+  //   return ()=>{
+  //      activeHttpRequests.current.forEach(abort=>abort.abort());
+  //   }
+  // },[]);
+  
+
+  return {isLoading,error,senRequest,clearError};
 };

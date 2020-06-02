@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { BdFilter } from "../../../Usercontext";
 
 const Button = ({ btn_text, isValid, signup, values, sl, se, ss }) => {
-  const { setli } = React.useContext(BdFilter);
+  const { setli,setuid } = React.useContext(BdFilter);
   const history = useHistory();
   const LoginHandler = async (event) => {
     sl((prev) => true);
     if (signup) {
+      
       try {
         
         se((prev) => null);
@@ -25,6 +26,7 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss }) => {
               password: values.password,
             }),
           });
+          
 
           const response_data = await response.json();
           if (!response.ok){
@@ -57,6 +59,7 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss }) => {
          }
         sl((prev) => false);
         setli((prev) => true);
+        setuid((prev)=>response_data.user.id)
         history.push("/");
 
       }catch(err){

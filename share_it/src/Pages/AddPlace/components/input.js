@@ -31,7 +31,9 @@ export const Input = ({
   rows,
   validation_error,
   validators,
-  onInput
+  onInput,
+  setter,
+  inputs
 }) => {
   
   const [inputState, dispatch] = React.useReducer(inputReducer, {
@@ -43,6 +45,12 @@ export const Input = ({
     onInput(id,inputState.isValid)
   },[inputState.isValid])
   const changeHandler = (event) => {
+    const new_set={...inputs,[event.target.id]:event.target.value}
+    
+    setter((prev)=>{
+      return new_set
+    })
+      
     dispatch({
       type: "CHANGE",
       val: event.target.value,
@@ -84,6 +92,7 @@ export const Input = ({
         value={inputState.value}
         onBlur={blurHandler}
         onChange={changeHandler}
+        
       />
     );
   return (

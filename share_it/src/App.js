@@ -26,10 +26,11 @@ const App = () => {
   const [de,setde]=React.useState(false);  //setting delete card
   const [details,setdetails]=React.useState({description:'',lat:'',long:'',id:''})
   const [li,setli]=React.useState(false) //authentication
+  const [uid,setuid]=React.useState(null)//userid after logging in
   return (
     <>
       <Router>
-      <BdFilter.Provider value={{bd,setbd,sd,setsd,li,setli}}>
+      <BdFilter.Provider value={{bd,setbd,sd,setsd,li,setli,uid,setuid}}>
         <Header />
         <Switch>
           <Route path="/" component={allUsers} exact={true} />
