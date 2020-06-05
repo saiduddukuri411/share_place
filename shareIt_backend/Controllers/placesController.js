@@ -38,6 +38,7 @@ const getPlaceByUserId = async(req, res, next) => {
   }
   
   if (userWithPlaces) {
+    console.log('places',userWithPlaces)
     res.json({data:userWithPlaces.places.map(place=>place.toObject({getters:true}))});
   } else {
     return next(new HttpError("data with that user id not found", 404));
@@ -54,7 +55,7 @@ const createPlace = async (req, res, next) => {
   }
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('invalid data passed')
+    
     return next(new HttpError("invalid inputs passed , check your data", 422));
   }
   const createdPlace = new placeModel({

@@ -12,9 +12,9 @@ const Input = React.memo(
     name, 
     value,
     validations,
-    validhandler
+    validhandler,
+    executer
   }) => {
-    console.log(name);
     const isValid = validator(validations, value);
     const [isFocused, setfocused] = React.useState(false);
     const getOut = () => {
@@ -31,7 +31,10 @@ const Input = React.memo(
           name={name}
           onBlur={getOut}
           value={value}
-          onChange={handler}
+          onChange={(e)=>{
+            handler(e);
+            executer();
+          }}
         />
       ) : (
         <textarea
@@ -43,7 +46,10 @@ const Input = React.memo(
           onBlur={getOut}
           name={name}
           rows="3"
-          onChange={handler}
+          onChange={(e)=>{
+            handler(e);
+            executer();
+          }}
         />
       );
     return (

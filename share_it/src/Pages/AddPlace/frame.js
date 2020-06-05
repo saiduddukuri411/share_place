@@ -8,6 +8,7 @@ import {useHttpHook} from '../Hooks/httpHook.js';
 import Errmodel from '../Err_model/frame';
 import Loader from '../Loading/frame';
 import {useHistory} from 'react-router-dom'
+import Imageholder from '../Imageholder/frame';
 
 
 const reducer=(state,action)=>{
@@ -71,15 +72,15 @@ const Frame = () => {
   return (
     <>
       <div className="form_container">
-        <form className="form">
+        <form className="form" onSubmit={(e)=>{e.preventDefault();}}>
           <Input
             label="Title"
             id="0"
             type="input"
             element="input"
             placeholder="place name"
-            validators={[{ type: "REQUIRE" }]}
-            validation_error="Empty field"
+            validators={[{ type: "REQUIRE" },{ type: "MAXLENGTH", val: 16 }]}
+            validation_error="Name in 1 to 16 charecters"
             onInput={validate_function}
             setter={setInputs}
             inputs={inputs}
@@ -111,6 +112,7 @@ const Frame = () => {
             setter={setInputs}
             inputs={inputs}
           />
+          <Imageholder />
           {list_validator() ? (
             <div className="submit" onClick={addHandler}>
               <h3>ADD</h3>
@@ -122,7 +124,7 @@ const Frame = () => {
       <Sidedrawer />
       {isLoading?<Loader />:null}
       {error?<Errmodel err={error} title="An Error Occured!" fun={clearError} btn="okay"/>:null}
-      {success?<Errmodel err="Added your desired location successfull" title="Successfully Added" fun={GoHome} btn="Home"/>:null}
+      {success?<Errmodel err="Added your desired location successfull" title="Successfully Added" fun={()=>{}} path="/myplaces" btn="My Places"/>:null}
     </>
   );
 };

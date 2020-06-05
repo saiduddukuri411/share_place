@@ -2,8 +2,8 @@ import React from "react";
 import "./styles/frame.scss";
 import {Link} from 'react-router-dom';
 
-const Err_modal = ({ err, fun, title ,btn }) => {
-  console.log('sai',typeof(err),err.message)
+const Err_modal = ({ err, fun, title ,btn,path }) => {
+  
   return (
     <>
       <section className="frame_container"></section>
@@ -21,7 +21,7 @@ const Err_modal = ({ err, fun, title ,btn }) => {
               }}
             >
               <h6>{btn}</h6>
-            </div>:<Link to='/' style={{textDecoration:"none"}} ><div
+            </div>:<Link to={path?path:'/'} style={{textDecoration:"none"}} ><div
               className="model_btn"
             >
               <h6>{btn}</h6>

@@ -16,7 +16,7 @@ const Frame = () => {
   const { isLoading, error, senRequest, clearError } = useHttpHook();
 
   const [loadedUsers, setLoadedusers] = React.useState('Loading');
- 
+
   React.useEffect(()=>{
     const fetchUsers = async () => {
       try {
@@ -31,7 +31,10 @@ const Frame = () => {
     fetchUsers();
   }, [senRequest]);
   
-  const { bd } = React.useContext(BdFilter);
+  const { bd,setbd } = React.useContext(BdFilter);
+  React.useEffect(()=>{
+   setbd((pre)=>false)
+  },[])
 
   if (isLoading) {
     return <Loader />;

@@ -7,8 +7,9 @@ import { BdFilter, MdFilter } from "../../../Usercontext";
 import Model from "../../Backdop/model";
 import { Link } from "react-router-dom";
 
-export const ImageCard = ({ url, name, details }) => {
-  const { setbd,li } = React.useContext(BdFilter);
+export const ImageCard = ({ url, name, details,user,afterDelete }) => {
+  console.log(details.id)
+  const { setbd,li,uid } = React.useContext(BdFilter);
   const { setmd, setti, setmp, setdetails, de, setde } = React.useContext(
     MdFilter
   );
@@ -33,7 +34,7 @@ export const ImageCard = ({ url, name, details }) => {
             +About
           </span>
         </h4>
-        <div class={li?"icon-holder":"icon-holder  justify_center"}>
+        <div class={li && user===uid?"icon-holder":"icon-holder  justify_center"}>
           <MdLocationOff
             className="map-icons"
             onClick={() => {
@@ -45,20 +46,19 @@ export const ImageCard = ({ url, name, details }) => {
               setdetails(details);
             }}
           />
-          {li?<Link to={`/places/${details.id}`} style={{ textDecoration: "none" }}>
+          {li && user===uid?<Link to={`/places/${details.id}`} style={{ textDecoration: "none" }}>
             <MdEdit className="edit-icons" />
           </Link>:null}
           
-          {li?<MdDelete
+          {li && user===uid?<MdDelete
             className="delete-icons"
             onClick={() => {
-              console.log('delete')
               setbd((prev) => true);
               setmp((prev) => false);
               setde((prev) => true);
               setmd((prev) => true);
               setti((prev) => name);
-              setdetails(details);
+              setdetails({...details,fun:(placeId)=>{afterDelete(placeId)}});
             }}
           />:null}
           
