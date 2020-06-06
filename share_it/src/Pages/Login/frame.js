@@ -10,6 +10,7 @@ import Sidedrawer from "../Backdop/Sidedrawer";
 import Backdrop from "../Backdop/backdrop";
 import { BdFilter } from "../../Usercontext";
 import Loader from "../Loading/frame";
+import Imageupload from '../Imageholder/frame';
 import Errmodel from "../Err_model/frame";
 
 export const Frame = () => {
@@ -28,11 +29,12 @@ export const Frame = () => {
   }
   const { bd } = React.useContext(BdFilter);
   const [singup, setsignup] = React.useState(false);
+  const [profile,setProfile]=React.useState(null);
   const login = () => {
     return validation.email && validation.password;
   };
   const signup_fun = () => {
-    return validation.email && validation.password & validation.user;
+    return validation.email && validation.password && validation.user && profile;
   };
   return (
     <>
@@ -71,6 +73,7 @@ export const Frame = () => {
           isValid={validation.password}
           handler={handler}
         />
+        {singup?<Imageupload id="image" profile={setProfile}/>:null}
 
         <Button
           btn_text={singup ? "SignUp" : "Login"}
@@ -80,6 +83,7 @@ export const Frame = () => {
           sl={setIsloading}
           se={setIsError}
           ss={setSignup}
+          profile={profile}
         />
         <div className="extra_holder">
           <div

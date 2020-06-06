@@ -1,8 +1,67 @@
-@import '../../../colors.scss';
+@import "../../../colors.scss";
 
-.fileContainer{
-
-    width:100%;
-    border:1px solid red;
-    margin-bottom: 15px;
+.fileContainer {
+  width: 100%;
+//   border: 1px solid red;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  .image_uploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .image_button {
+      width: 150px;
+      height: 40px;
+      background: $fav_red;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      h7 {
+        color: $primary_white;
+        font-family: $abel_font;
+        font-size: 20px;
+        letter-spacing: 0.13rem;
+      }
+    }
+    .upload_holder {
+      width: 130px;
+      height: 150px;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    //   border: 1px solid black;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      h7{
+          font-family: $abel_font;
+          font-size: 19px;
+          font-weight: bold;
+          color: $fav_red;
+          letter-spacing: 0.08rem;
+          
+      }
+      img {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        display: block;
+        width: 100%;
+        height: 100%;
+        animation: 1s appear;
+        transition:$transition;
+        @keyframes appear {
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+      }
+    }
+  }
 }
