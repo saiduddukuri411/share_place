@@ -84,6 +84,7 @@ export const Frame = () => {
           se={setIsError}
           ss={setSignup}
           profile={profile}
+          image_id="image"
         />
         <div className="extra_holder">
           <div

@@ -8,7 +8,6 @@ import Model from "../../Backdop/model";
 import { Link } from "react-router-dom";
 
 export const ImageCard = ({ url, name, details,user,afterDelete }) => {
-  console.log(details.id)
   const { setbd,li,uid } = React.useContext(BdFilter);
   const { setmd, setti, setmp, setdetails, de, setde } = React.useContext(
     MdFilter
@@ -17,7 +16,7 @@ export const ImageCard = ({ url, name, details,user,afterDelete }) => {
     <>
       <div className="place_container">
         <section className="image_section">
-          <img src={url} alt="place" />
+          <img src={`http://localhost:5000/${url}`} alt="place" />
         </section>
         <h3>{name}</h3>
         <h4>

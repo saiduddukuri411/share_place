@@ -25,9 +25,10 @@ const reducer=(state,action)=>{
 }
 const Frame = () => {
   const { isLoading, error, senRequest, clearError } = useHttpHook();
-  const { bd,uid } = React.useContext(BdFilter);
+  const { bd,uid ,token} = React.useContext(BdFilter);
   const [inputs,setInputs]=React.useState({0:'',1:'',2:''})
   const [success,setsuccess]=React.useState(false)
+  const [profile,setprofile]=React.useState(null)
   const GoHome=()=>{
     const history=useHistory();
     history.push('/');
@@ -47,19 +48,25 @@ const Frame = () => {
     
   });
   const list_validator=()=>{
-     let valid=overallState.title && overallState.desc && overallState.add;
+     let valid=overallState.title && overallState.desc && overallState.add && profile!==null;
      return valid
   }
+
   const addHandler=async ()=>{
+    const formData=new FormData();
+    formData.append('title',inputs[0]);
+    formData.append('description',inputs[1]);
+    formData.append('address',inputs[2]);
+    formData.append('owner',uid);
+    formData.append('image',profile);
     try{
-      const resp=await senRequest('http://localhost:5000/api/places/','POST',JSON.stringify({
-        title:inputs[0],
-        description:inputs[1],
-        address:inputs[2],
-        owner:uid
- 
-     }),{'Content-Type':'application/json'})
-     setsuccess(true)
+      const resp=await senRequest('http://localhost:5000/api/places/','POST',formData,{
+        Authorization:'Bearer'+' '+token,
+      })
+      if(resp){
+        setsuccess(true)
+      }
+     
      
     //  redirect the user to different page
     }catch(err){
@@ -67,7 +74,7 @@ const Frame = () => {
     
     
  }
-
+ 
   
   return (
     <>
@@ -93,9 +100,9 @@ const Frame = () => {
             placeholder="Tell something about this place"
             validators={[
               { type: "MINLENGTH", val: 25 },
-              { type: "MAXLENGTH", val: 300 },
+              { type: "MAXLENGTH", val: 450 },
             ]}
-            validation_error="Describe in 20 to 350 charecters"
+            validation_error="Describe in 20 to 450 charecters"
             onInput={validate_function}
             setter={setInputs}
             inputs={inputs}
@@ -112,7 +119,7 @@ const Frame = () => {
             setter={setInputs}
             inputs={inputs}
           />
-          <Imageholder />
+          <Imageholder id="image" profile={setprofile}/>
           {list_validator() ? (
             <div className="submit" onClick={addHandler}>
               <h3>ADD</h3>

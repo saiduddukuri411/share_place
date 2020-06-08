@@ -5,7 +5,7 @@ const card = ({source,name,count}) => {
     return (
         <div className="card-container">
             <div className="top-portion">
-                <img src={source} alt="male" />
+                <img src={`http://localhost:5000/${source}`} alt="male" />
                 <h5>{count>1?`${count} places` :`${count} place` }</h5>
             </div>
             <div className="bottom-portion">

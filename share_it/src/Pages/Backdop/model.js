@@ -10,9 +10,9 @@ import "./styles/model.scss";
 export const Model = ({ center, zoom }) => {
   //const google_map=new window.google.maps.Map();
   const { isLoading, error, senRequest, clearError } = useHttpHook();
-  const { setbd } = React.useContext(BdFilter);
+  const { setbd,token } = React.useContext(BdFilter);
   const { setmd, md, ti, mp, details, de } = React.useContext(MdFilter);
-  console.log(details);
+  
 
   const map_ref = useRef();
 
@@ -38,7 +38,11 @@ export const Model = ({ center, zoom }) => {
     try {
       const res= await senRequest(
         `http://localhost:5000/api/places/${details.id}`,
-        "DELETE"
+        "DELETE",
+         null,
+         {
+           Authorization:`Barer ${token}`
+         }
       );
       if(res){
         details.fun(details.id);
@@ -102,8 +106,8 @@ export const Model = ({ center, zoom }) => {
           fun={()=>{
 
           }}
-          path="/"
-          btn="Home"
+          path="/myplaces"
+          btn="My Places"
         />
       ) : null}
     </>

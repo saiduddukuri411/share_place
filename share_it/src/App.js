@@ -33,18 +33,19 @@ const App = () => {
   });
   const [li, setli] = React.useState(false); //authentication
   const [uid, setuid] = React.useState(null); //userid after logging in
+  const [token, setToken] = React.useState(null); //userid after logging in
   return (
     <>
-      <Router >
+      <Router>
         <BdFilter.Provider
-          value={{ bd, setbd, sd, setsd, li, setli, uid, setuid }}
+          value={{ bd, setbd, sd, setsd, li, setli, uid, setuid,token,setToken }}
         >
           <Header />
           <Switch>
             <Route path="/" component={allUsers} exact={true} />
-            {/* {li ? ( */}
+            {li ? (
               <Route path="/places/new" component={addPlaces} exact={true} />
-            {/* ) : null} */}
+            ) : null}
 
             {li ? (
               <Route

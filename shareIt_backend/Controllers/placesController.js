@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http_errors");
 const { validationResult } = require("express-validator");
 const getCoordinates = require("../Location/getCoordinates");
+const fs=require('fs');
 
 
 
@@ -38,7 +39,6 @@ const getPlaceByUserId = async(req, res, next) => {
   }
   
   if (userWithPlaces) {
-    console.log('places',userWithPlaces)
     res.json({data:userWithPlaces.places.map(place=>place.toObject({getters:true}))});
   } else {
     return next(new HttpError("data with that user id not found", 404));
@@ -63,8 +63,7 @@ const createPlace = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/1/10/Empire_State_Building_with_1WTC_in_background.png",
+    image:req.file.path,
     owner,
   });
   let user;
@@ -84,7 +83,6 @@ const createPlace = async (req, res, next) => {
     await user.save({session:sess});
     await sess.commitTransaction();
   }catch(error){
-    console.log('sai',error)
     const err=new HttpError('creating place failed, please try again',500)
     return next(err);
   }
@@ -102,13 +100,11 @@ const updatePlace = async(req, res, next) => {
     ));
   }
   const placeId = req.params.placeId;
-  console.log('place_id',placeId)
   let place;
  try{
    place=await placeModel.findById(placeId).exec();
 
  }catch(error){
-   console.log('sai',error)
    return next(new HttpError(
       "failed to update,try again",
       500
@@ -116,8 +112,11 @@ const updatePlace = async(req, res, next) => {
  }
   
   if (!place) {
-    console.log('not found')
+    
     return next(new HttpError("place with that id was not found", 404));
+  }
+  if(place.owner.toString()!==req.userData.userId){
+    return next(new HttpError('you are not allowed to edit this place', 401))
   }
   place.title=title;
   place.description=description;
@@ -146,6 +145,10 @@ const deletePlace = async(req, res, next) => {
    if(!place){
      return next(new HttpError('couldnot find place with id',404));
    }
+   if(place.owner.id!==req.userData.userId){
+    return next(new HttpError('you are not allowed to delete this place', 403))
+  }
+   const imagePath=place.image;
   try{
       const sess=await mongoose.startSession();
       sess.startTransaction();
@@ -154,9 +157,11 @@ const deletePlace = async(req, res, next) => {
       await place.owner.save({session:sess});
       await sess.commitTransaction();
   }catch(error){
-    console.log('sai',error);
     return next(new HttpError('somewhing went wrong',500))
   }
+  fs.unlink(imagePath,(err)=>{
+    console.log(err)
+  });
   res.status(200).json({ message: "place successfully deleted" });
 };
 

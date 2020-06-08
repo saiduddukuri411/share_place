@@ -4,12 +4,14 @@ import {NavLink} from 'react-router-dom';
 import {BdFilter} from '../../../Usercontext'
 
 const Card = ({text,link}) => {
-    const {setli,setsd,setbd,Link}=React.useContext(BdFilter)
+    const {setli,setsd,setbd,Link,setToken,setuid}=React.useContext(BdFilter)
     const handler=()=>{
      setsd((prev)=>false)
      setbd((prev)=>false)
      if(text==='LOG OUT'){
         setli((prev)=>false)
+        setToken((preb)=>null);
+        setuid((prev)=>null);
      }
     }
     return (

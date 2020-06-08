@@ -3,8 +3,18 @@ import "../styles/button.scss";
 import { useHistory } from "react-router-dom";
 import { BdFilter } from "../../../Usercontext";
 
-const Button = ({ btn_text, isValid, signup, values, sl, se, ss, profile }) => {
-  const { setli, setuid } = React.useContext(BdFilter);
+const Button = ({
+  btn_text,
+  isValid,
+  signup,
+  values,
+  sl,
+  se,
+  ss,
+  profile,
+  image_id,
+}) => {
+  const { setli, setuid,setToken } = React.useContext(BdFilter);
   const history = useHistory();
   const LoginHandler = async (event) => {
     sl((prev) => true);
@@ -12,17 +22,14 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss, profile }) => {
       try {
         se((prev) => null);
         ss(() => false);
+        const formData = new FormData();
+        formData.append("email", values.email);
+        formData.append("name", values.user);
+        formData.append("password", values.password);
+        formData.append("image", profile);
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            name: values.user,
-            email: values.email,
-            password: values.password,
-          }),
+          body: formData, //with form data no need to det headers
         });
 
         const response_data = await response.json();
@@ -56,7 +63,8 @@ const Button = ({ btn_text, isValid, signup, values, sl, se, ss, profile }) => {
         }
         sl((prev) => false);
         setli((prev) => true);
-        setuid((prev) => response_data.user.id);
+        setuid((prev) => response_data.userId);
+        setToken((prev) => response_data.token);
         history.push("/");
       } catch (err) {
         sl((prev) => false);
