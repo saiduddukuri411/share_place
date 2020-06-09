@@ -14,6 +14,7 @@ import Userplaces from "./Pages/UserPlace/frame";
 import Updatedplace from "./Pages/UpdatePlace/frame";
 import Login from "./Pages/Login/frame";
 import Myplaces from "./Pages/Myplaces/frame";
+let logoutTimer;
 
 const App = () => {
   // const bool=React.useContext(BdFilter);
@@ -34,11 +35,52 @@ const App = () => {
   const [li, setli] = React.useState(false); //authentication
   const [uid, setuid] = React.useState(null); //userid after logging in
   const [token, setToken] = React.useState(null); //userid after logging in
+  const [tokenExp,setTokenExp]=React.useState(null);
+  React.useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+    if (
+      storedData &&
+      storedData.token &&
+      new Date(storedData.expiration) > new Date()
+    ) {
+      setli((prev) => true);
+      setuid((prev) => storedData.userId);
+      setToken((prev) => storedData.token);
+      setTokenExp((prev)=>storedData.expiration);
+    }
+  }, []);
+  React.useEffect(() => {
+    
+    if (token && tokenExp) {
+      const remainingTime=new Date(tokenExp).getTime()-new Date().getTime();
+      logoutTimer=setTimeout((remainingTime) => {
+        setli((prev) => false);
+        setToken((preb) => null);
+        setuid((prev) => null);
+        setTokenExp((prev)=>null);
+        localStorage.removeItem("userData");
+      }, remainingTime );
+    }else{
+      clearTimeout(logoutTimer);
+    }
+  }, [token,tokenExp]);
   return (
     <>
       <Router>
         <BdFilter.Provider
-          value={{ bd, setbd, sd, setsd, li, setli, uid, setuid,token,setToken }}
+          value={{
+            bd,
+            setbd,
+            sd,
+            setsd,
+            li,
+            setli,
+            uid,
+            setuid,
+            token,
+            setToken,
+            setTokenExp
+          }}
         >
           <Header />
           <Switch>

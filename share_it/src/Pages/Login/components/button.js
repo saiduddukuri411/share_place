@@ -12,9 +12,9 @@ const Button = ({
   se,
   ss,
   profile,
-  image_id,
+  image_id
 }) => {
-  const { setli, setuid,setToken } = React.useContext(BdFilter);
+  const { setli, setuid, setToken,setTokenExp } = React.useContext(BdFilter);
   const history = useHistory();
   const LoginHandler = async (event) => {
     sl((prev) => true);
@@ -65,6 +65,16 @@ const Button = ({
         setli((prev) => true);
         setuid((prev) => response_data.userId);
         setToken((prev) => response_data.token);
+        const tokenExpirationDate=new Date(new Date().getTime()+1000*60*60);
+        setTokenExp((prev)=>tokenExpirationDate);
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            userId: response_data.userId,
+            token: response_data.token,
+            expiration:tokenExpirationDate.toISOString()
+          })
+        );
         history.push("/");
       } catch (err) {
         sl((prev) => false);

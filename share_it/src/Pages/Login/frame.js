@@ -10,7 +10,7 @@ import Sidedrawer from "../Backdop/Sidedrawer";
 import Backdrop from "../Backdop/backdrop";
 import { BdFilter } from "../../Usercontext";
 import Loader from "../Loading/frame";
-import Imageupload from '../Imageholder/frame';
+import Imageupload from "../Imageholder/frame";
 import Errmodel from "../Err_model/frame";
 
 export const Frame = () => {
@@ -20,21 +20,23 @@ export const Frame = () => {
   });
   const [isLoading, setIsloading] = React.useState(false);
   const [isError, setIsError] = React.useState(null);
-  const [succSignup,setSignup]=React.useState(false);
+  const [succSignup, setSignup] = React.useState(false);
   const errHandler = () => {
     setIsError((prev) => null);
   };
-  const signupHandler=()=>{
-    setSignup((prev)=>false)
-  }
+  const signupHandler = () => {
+    setSignup((prev) => false);
+  };
   const { bd } = React.useContext(BdFilter);
   const [singup, setsignup] = React.useState(false);
-  const [profile,setProfile]=React.useState(null);
+  const [profile, setProfile] = React.useState(null);
   const login = () => {
     return validation.email && validation.password;
   };
   const signup_fun = () => {
-    return validation.email && validation.password && validation.user && profile;
+    return (
+      validation.email && validation.password && validation.user && profile
+    );
   };
   return (
     <>
@@ -73,7 +75,7 @@ export const Frame = () => {
           isValid={validation.password}
           handler={handler}
         />
-        {singup?<Imageupload id="image" profile={setProfile}/>:null}
+        {singup ? <Imageupload id="image" profile={setProfile} /> : null}
 
         <Button
           btn_text={singup ? "SignUp" : "Login"}
@@ -89,7 +91,9 @@ export const Frame = () => {
         <div className="extra_holder">
           <div
             className={
-              singup ? "extra_features justify_center" : "extra_features"
+              singup
+                ? "extra_features justify_center"
+                : "extra_features justify_center"
             }
           >
             <h2
@@ -100,22 +104,26 @@ export const Frame = () => {
             >
               {singup ? "LogIn!" : "SignUp!"}
             </h2>
-            {singup ? null : <h2 className="childs bar">|</h2>}
-
-            {singup ? null : (
-              <h2 className="childs text_dec">Forget Password?</h2>
-            )}
           </div>
         </div>
       </section>
       {bd ? <Backdrop /> : null};{isLoading ? <Loader /> : null}
       {isError ? (
-        <Errmodel err={isError} title="An Error Occured!" fun={errHandler} btn="okay" />
+        <Errmodel
+          err={isError}
+          title="An Error Occured!"
+          fun={errHandler}
+          btn="okay"
+        />
       ) : null}
-      {succSignup?
-      <Errmodel err="user successfully regestered , kindly go back and login." title="Successfully Registered" fun="" btn="Home" />:
-      null
-      }
+      {succSignup ? (
+        <Errmodel
+          err="user successfully regestered , kindly go back and login."
+          title="Successfully Registered"
+          fun=""
+          btn="Home"
+        />
+      ) : null}
       <Sidedrawer />
     </>
   );
