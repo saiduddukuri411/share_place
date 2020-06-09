@@ -16,7 +16,7 @@ export const ImageCard = ({ url, name, details,user,afterDelete }) => {
     <>
       <div className="place_container">
         <section className="image_section">
-          <img src={`http://localhost:5000/${url}`} alt="place" />
+          <img src={`${process.env.REACT_APP_SECONDARY_URL}${url}`} alt="place" />
         </section>
         <h3>{name}</h3>
         <h4>

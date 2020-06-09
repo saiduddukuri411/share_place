@@ -61,8 +61,9 @@ const Frame = () => {
     formData.append('image',profile);
     try{
       const resp=await senRequest(process.env.REACT_APP_BACKEND_URL+'/places/','POST',formData,{
-        Authorization:'Bearer'+' '+token,
-      })
+        Authorization:`Bearer ${token}`,
+      },
+      )
       if(resp){
         setsuccess(true)
       }
