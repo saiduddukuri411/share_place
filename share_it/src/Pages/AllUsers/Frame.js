@@ -20,7 +20,7 @@ const Frame = () => {
   React.useEffect(()=>{
     const fetchUsers = async () => {
       try {
-        const response = await senRequest("http://localhost:5000/api/users/");
+        const response = await senRequest(`${process.env.REACT_APP_BACKEND_URL}/users/`);
         if(response){
           setLoadedusers((prev)=>response.users)
         }

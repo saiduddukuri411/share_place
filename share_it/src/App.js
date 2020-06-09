@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Suspense} from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,13 +7,20 @@ import {
 } from "react-router-dom";
 
 import allUsers from "./Pages/AllUsers/Frame";
-import addPlaces from "./Pages/AddPlace/frame";
+// import addPlaces from "./Pages/AddPlace/frame";
 import Header from "./Pages/Header/frame";
 import { BdFilter, MdFilter } from "./Usercontext";
-import Userplaces from "./Pages/UserPlace/frame";
-import Updatedplace from "./Pages/UpdatePlace/frame";
-import Login from "./Pages/Login/frame";
+import Loader from './Pages/Loading/frame';
+// import Userplaces from "./Pages/UserPlace/frame";
+// import Updatedplace from "./Pages/UpdatePlace/frame";
+// import Login from "./Pages/Login/frame";
 import Myplaces from "./Pages/Myplaces/frame";
+const addPlaces=React.lazy(()=>import('./Pages/AddPlace/frame'));
+const Updatedplace=React.lazy(()=>import('./Pages/UpdatePlace/frame'));
+const Login=React.lazy(()=>import('./Pages/Login/frame'));
+const Userplaces=React.lazy(()=>import('./Pages/UserPlace/frame'));
+
+
 let logoutTimer;
 
 const App = () => {
@@ -67,6 +74,11 @@ const App = () => {
   return (
     <>
       <Router>
+        <Suspense fallback={
+          <div className="center">
+            <Loader />
+           </div>
+        }>
         <BdFilter.Provider
           value={{
             bd,
@@ -127,6 +139,7 @@ const App = () => {
             {/* <Redirect to="/" /> */}
           </Switch>
         </BdFilter.Provider>
+        </Suspense>
       </Router>
     </>
   );

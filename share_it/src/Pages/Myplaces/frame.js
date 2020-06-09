@@ -29,7 +29,7 @@ const MyPlaceFrame = () => {
     const fetchPlaces = async () => {
       try {
         const ResponseData = await senRequest(
-          `http://localhost:5000/api/places/${id}/places`
+          process.env.REACT_APP_BACKEND_URL+`/places/${id}/places`
         );
         if (ResponseData) {
           setdata(() => ResponseData.data);

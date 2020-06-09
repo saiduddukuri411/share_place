@@ -60,7 +60,7 @@ const Frame = () => {
     formData.append('owner',uid);
     formData.append('image',profile);
     try{
-      const resp=await senRequest('http://localhost:5000/api/places/','POST',formData,{
+      const resp=await senRequest(process.env.REACT_APP_BACKEND_URL+'/places/','POST',formData,{
         Authorization:'Bearer'+' '+token,
       })
       if(resp){

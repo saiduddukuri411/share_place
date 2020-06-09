@@ -40,7 +40,7 @@ const Frame = (props) => {
     const fetchPlaces = async () => {
       try {
         const ResponseData = await senRequest(
-          `http://localhost:5000/api/places/${place_id}`
+          process.env.REACT_APP_BACKEND_URL+`/places/${place_id}`
         );
         if (ResponseData) {
           setLoadedplace(() => ResponseData.data);
@@ -70,7 +70,7 @@ const Frame = (props) => {
     let des = dummydesc ? dummydesc : state["desc"];
     try {
       await senRequest(
-        `http://localhost:5000/api/places/${place_id}`,
+        process.env.REACT_APP_BACKEND_URL+`/places/${place_id}`,
         "PATCH",
         JSON.stringify({
           title: ti,

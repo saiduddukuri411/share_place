@@ -37,7 +37,7 @@ export const Model = ({ center, zoom }) => {
   const deleteHandler = async () => {
     try {
       const res= await senRequest(
-        `http://localhost:5000/api/places/${details.id}`,
+        process.env.REACT_APP_BACKEND_URL+`/places/${details.id}`,
         "DELETE",
          null,
          {
