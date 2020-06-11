@@ -25,7 +25,6 @@ const MyPlaceFrame = () => {
  },[])
   const id = uid;
   React.useEffect(() => {
-    console.log("sai");
     const fetchPlaces = async () => {
       try {
         const ResponseData = await senRequest(

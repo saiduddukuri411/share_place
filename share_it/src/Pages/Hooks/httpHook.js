@@ -32,7 +32,6 @@ export const useHttpHook = () => {
   },[]);
 
   const clearError=React.useCallback(()=>{
-    console.log('sai')
     seterror((prev)=>null)
   },[])
   //  React.useEffect=(()=>{

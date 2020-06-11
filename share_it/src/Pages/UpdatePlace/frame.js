@@ -40,7 +40,7 @@ const Frame = (props) => {
     const fetchPlaces = async () => {
       try {
         const ResponseData = await senRequest(
-          process.env.REACT_APP_BACKEND_URL+`/places/${place_id}`
+          process.env.REACT_APP_BACKEND_URL + `/places/${place_id}`
         );
         if (ResponseData) {
           setLoadedplace(() => ResponseData.data);
@@ -69,8 +69,8 @@ const Frame = (props) => {
     let ti = dummytitle ? dummytitle : state["title"];
     let des = dummydesc ? dummydesc : state["desc"];
     try {
-      await senRequest(
-        process.env.REACT_APP_BACKEND_URL+`/places/${place_id}`,
+      const resp = await senRequest(
+        process.env.REACT_APP_BACKEND_URL + `/places/${place_id}`,
         "PATCH",
         JSON.stringify({
           title: ti,
@@ -81,7 +81,9 @@ const Frame = (props) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      setUpdated((prev) => true);
+      if (resp) {
+        setUpdated((prev) => true);
+      }
     } catch {}
   };
 

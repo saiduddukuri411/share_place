@@ -3,7 +3,6 @@ import "../styles/input.scss";
 import { validate } from "./validations";
 
 const inputReducer = (state, action) => {
-  // console.log('sai',validate(action.val,action.validators),action.val.trim().length>0)
   switch (action.type) {
     case "CHANGE":
       return {
